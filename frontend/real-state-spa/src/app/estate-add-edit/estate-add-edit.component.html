@@ -1,0 +1,116 @@
+<div mat-dialog-title>
+  <h2>Estate Form</h2>
+</div>
+<form [formGroup]="estateForm" (ngSubmit)="onSave()">
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Estate Code</mat-label>
+        <input matInput type="text" placeholder="Ex. ES-01" formControlName="EstateCode" required>
+        <mat-error *ngIf="hasError('EstateCode', 'required')">Estate Code is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Estate Name</mat-label>
+        <input matInput type="text" placeholder="Ex. 3+1 Apartment" formControlName="EstateName" required>
+        <mat-error *ngIf="hasError('EstateName', 'required')">Estate Name is required</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Building Date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="BuildingDate" placeholder="Choose a date">
+        <mat-hint>DD.MM.YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Price</mat-label>
+        <input matInput type="number" placeholder="Ex. 100,50" formControlName="Price">
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Floor Number</mat-label>
+        <input matInput type="number" pattern="[0-9]*" placeholder="Ex. 5" formControlName="FloorNumber" required>
+        <mat-error *ngIf="hasError('FloorNumber', 'required')">Floor Number is required</mat-error>
+        <mat-error *ngIf="hasError('FloorNumber', 'pattern')">Only numbers are allowed. Exp: 125</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Room Count</mat-label>
+        <input matInput type="text" placeholder="Ex. 3+1" formControlName="RoomCount" required>
+        <mat-error *ngIf="hasError('RoomCount', 'required')">Room Count is required</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Gross Area (m²)</mat-label>
+        <input matInput type="number" placeholder="Ex. 120,75" formControlName="GrossArea">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Net Area (m²)</mat-label>
+        <input matInput type="number" placeholder="Ex. 100,50" formControlName="NetArea">
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Estate Type</mat-label>
+        <mat-select formControlName="EstateTypeId" required>
+          <mat-option *ngFor="let estate of estateTypes" [value]="estate.TypeItemId">
+            {{estate.ItemName}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="hasError('EstateTypeId', 'required')">Estate Type is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Country</mat-label>
+        <input matInput type="text" placeholder="Ex. Turkey" formControlName="Country">
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>State *</mat-label>
+        <input matInput type="text" placeholder="Ex. Marmara Bölgesi" formControlName="State">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>City</mat-label>
+        <input matInput type="text" placeholder="Ex. İstanbul" formControlName="City">
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>District</mat-label>
+        <input matInput type="text" placeholder="Ex. Büyükçekmece" formControlName="District">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Location</mat-label>
+        <input matInput type="text" placeholder="Ex. Mimarsinan" formControlName="Location">
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Address</mat-label>
+        <textarea matInput type="text" placeholder="Ex. Address" formControlName="Address"></textarea>
+      </mat-form-field>
+    </div>
+
+  </div>
+  <div mat-dialog-actions class="action">
+    <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+    <button mat-raised-button color="primary" [disabled]="estateForm.invalid" type="submit">{{data ? 'Update': 'Save'
+      }}</button>
+  </div>
+</form>

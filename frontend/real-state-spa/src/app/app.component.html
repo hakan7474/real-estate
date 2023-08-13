@@ -1,0 +1,98 @@
+<mat-toolbar color="primary">
+  <span>Real State Application</span>
+  <span class="example-spacer"></span>
+  <button mat-raised-button (click)="openAddEstateForm()">
+    ADD ESTATE
+  </button>
+</mat-toolbar>
+
+
+<div class="main-body">
+
+  <section>
+    <button mat-mini-fab color="primary" (click)="getEstates()">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </section>
+  <mat-form-field appearance="outline">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Estate" #input>
+  </mat-form-field>
+
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="SysCode">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> System Code </th>
+        <td mat-cell *matCellDef="let row"> {{row.SysCode}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="EstateCode">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Estate Code </th>
+        <td mat-cell *matCellDef="let row"> {{row.EstateCode}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="EstateName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Estate Name </th>
+        <td mat-cell *matCellDef="let row"> {{row.EstateName}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="BuildingDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Building Date </th>
+        <td mat-cell *matCellDef="let row"> {{row.BuildingDate | date:'dd/MM/YYYY'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="FloorNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Floor Number </th>
+        <td mat-cell *matCellDef="let row"> {{row.FloorNumber | number}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="Price">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+        <td mat-cell *matCellDef="let row"> {{row.Price | number:'1.2-2'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="RoomCount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Room Count </th>
+        <td mat-cell *matCellDef="let row"> {{row.RoomCount}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="GrossArea">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> GrossArea (m²)</th>
+        <td mat-cell *matCellDef="let row"> {{row.GrossArea | number:'1.2-2'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="NetArea">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> NetArea (m²) </th>
+        <td mat-cell *matCellDef="let row"> {{row.NetArea | number:'1.2-2'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="EstateTypeName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> EstateTypeName </th>
+        <td mat-cell *matCellDef="let row"> {{row.EstateTypeName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button color="primary" (click)="openEditForm(row)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteEstate(row.EstateId)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+      </tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>
+</div>
